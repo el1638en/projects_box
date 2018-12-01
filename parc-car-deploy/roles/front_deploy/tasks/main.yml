@@ -1,0 +1,41 @@
+---
+- name: install unzip
+  apt:
+    name: unzip
+    state: latest
+
+- name: create front www web dir
+  file:
+    state: directory
+    path: "{{ front_www_dir }}"
+    owner: root
+    group: root
+
+# Dézipper l'archive dans le répertoire du projet
+- name: unarchive dist archive
+  unarchive:
+    src: "/tmp/{{ front_archive_file }}"
+    dest: "{{ front_www_dir }}"
+
+# Créer le fichier de configuration pour le site
+- name: copy configuration file
+  template:
+    src: vhost.conf.j2
+    dest: "{{ nginx_sites_available_dir }}/{{ front_name }}.conf"
+    owner: root
+    group: root
+  notify: restart nginx
+
+- name: Enable Nginx available sites
+  file:
+    src: "{{ nginx_sites_available_dir }}/{{ front_name }}.conf"
+    dest: "{{ nginx_sites_enabled_dir }}/{{ front_name }}.conf"
+    state: link
+    owner: root
+    group: root
+
+- name: ensure nginx is running (and enable it at boot)
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes

@@ -1,0 +1,3 @@
+---
+# defaults file for openjdk
+docker_compose_directory: /opt/parc-car/docker-compose

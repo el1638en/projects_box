@@ -1,0 +1,77 @@
+server:
+  port: 8080
+  tomcat:
+    max-http-form-post-size: 20MB
+    accesslog:
+        buffered: true
+        directory: {{ api_logs_directory }}
+        enabled: true
+        file-date-format: .yyyy-MM-dd
+        pattern: common
+        prefix: localhost_access_log
+        rename-on-rotate: false
+        request-attributes-enabled: false
+        rotate: true
+        suffix: .log
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    com.syscom: INFO
+    org:
+      hibernate: WARN
+      springframework: WARN
+      apache:
+        tomcat: INFO
+        catalina: INFO
+  file:
+    name: {{ api_logs_file }}
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    # cette ligne permet d'exclure la configuration de sécurité par défaut de Springboot. Ainsi, on redéfinira la configuration selon notre convenance.
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  application:
+    name: ms-parc-car
+  jpa:
+    database: postgresql
+    show-sql: true
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+  datasource:
+    platform: postgres
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:p6spy:postgresql://localhost:5432/ms_parc_car
+    username: ms_parc_car
+    password: ms_parc_car
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+  mail:
+    default-encoding: UTF-8
+    protocol: smtp
+    properties:
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+token:
+  jwt:
+    duration: 60
+    secret: 4pE8z3PBoHjnV1AhvGk+e8h2p+ShZpOnpr8cwHmMh1w=
+
+stored:
+  file:
+    pictures: {{api_main_directory}}/pictures

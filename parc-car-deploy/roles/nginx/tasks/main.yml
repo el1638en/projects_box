@@ -1,0 +1,11 @@
+---
+- name: Ensure nginx is installed.
+  apt:
+    name: nginx
+    state: present
+
+- name: Ensure nginx service is running as configured.
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes

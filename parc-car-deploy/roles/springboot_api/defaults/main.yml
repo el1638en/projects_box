@@ -1,0 +1,24 @@
+---
+api_user:
+api_group:
+api_name:
+api_main_directory:
+api_groupid:
+api_artifactid:
+api_jar_name:
+api_version:
+api_conf_directory: "/etc/{{ api_name }}/config"
+api_jar_directory: "{{ api_main_directory }}/jar"
+api_logs_directory: "/var/log/{{api_name}}/logs"
+api_logs_file: "{{ api_logs_directory }}/application.log"
+api_nexus_url: "{{ nexus_url }}/service/local/artifact/maven/content"
+api_conf_files:
+ - { src: "application.yml.j2", dest: "{{ api_conf_directory }}/application.yml" }
+
+#Paramètres du serveur de mail
+#springboot_mail_host: localhost
+#springboot_mail_port: 25
+#springboot_mail_username:
+#springboot_mail_password:
+#springboot_mail_properties_mail_smtp_auth:
+#springboot_mail_properties_mail_smtp_starttls_enable:

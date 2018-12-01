@@ -1,0 +1,7 @@
+---
+# handlers file for springboot_api
+- name: restart service
+  systemd:
+    state: restarted
+    name: "{{ api_name }}.service"
+    daemon_reload: yes

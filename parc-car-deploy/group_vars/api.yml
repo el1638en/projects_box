@@ -1,0 +1,9 @@
+---
+api_user: parc-car
+api_group: parc-car
+api_name: parc-car
+api_main_directory: /opt/parc-car
+api_groupid: "com.syscom"
+api_artifactid: "parc-car-api"
+api_jar_name: "parc-car-api.jar"
+api_version: 1.0.0

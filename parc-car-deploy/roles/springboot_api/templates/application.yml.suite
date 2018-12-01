@@ -1,0 +1,24 @@
+
+
+# To get all properties for Spring boot, look at here : https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+
+#Paramètres du serveur de mail
+#spring.mail.host={{ springboot_mail_host }}
+#spring.mail.port={{ springboot_mail_port }}
+#
+#{% if springboot_mail_username != None %}
+#spring.mail.username={{ springboot_mail_username }}
+#{% endif %}
+#
+#{% if springboot_mail_password != None %}
+#spring.mail.password={{ springboot_mail_password }}
+#{% endif %}
+#
+#{% if springboot_mail_properties_mail_smtp_auth != None %}
+#spring.mail.properties.mail.smtp.auth={{ springboot_mail_properties_mail_smtp_auth }}
+#{% endif %}
+#
+#{% if springboot_mail_properties_mail_smtp_starttls_enable != None %}
+#spring.mail.properties.mail.smtp.starttls.enable={{ springboot_mail_properties_mail_smtp_starttls_enable }}
+#{% endif %}

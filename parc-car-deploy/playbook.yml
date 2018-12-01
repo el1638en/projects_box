@@ -1,0 +1,53 @@
+###################
+# Playbook
+###################
+
+- hosts: api
+  gather_facts: true
+  vars_files:
+    - "vault.yml"
+  become: true
+  tasks:
+    - name: Stop parc-car api
+      systemd:
+        name: parc-car
+        state: stopped
+      ignore_errors: True
+      tags: ['always']
+
+    - name: Stop parc-car database (docker-compose)
+      shell: cd {{ docker_compose_directory }} && docker-compose stop
+      ignore_errors: True
+      tags: ['always']
+
+- hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: Download parc-car-api backend jar
+      shell: mvn org.apache.maven.plugins:maven-dependency-plugin:2.4:get \
+        -DgroupId=com.syscom \
+        -DartifactId=parc-car-api \
+        -Dversion={{ parc_car_api_version }} \
+        -DrepoUrl={{ nexus_repository_url }} \
+        -Ddest=/tmp/parc-car-api.jar
+    #      shell: mvn org.apache.maven.plugins:maven-dependency-plugin:2.4:get -DrepoUrl={{ nexus_repository_url }} -DartifactId=parc-car-api -DgroupId=com.syscom -Dversion=1.0.0 -Ddest=/var/lib/jenkins/parc-car-api.jar
+
+    - name: Download parc-car-webapp front war
+      shell: mvn org.apache.maven.plugins:maven-dependency-plugin:2.4:get \
+        -DgroupId=com.syscom \
+        -DartifactId=parc-car-webapp \
+        -Dversion={{ parc_car_webapp_version }} \
+        -DrepoUrl={{ nexus_repository_url }} \
+        -Dpackaging=war \
+        -Ddest=/tmp/parc-car-webapp.war
+
+- hosts: api
+  gather_facts: true
+  vars_files:
+    - "vault.yml"
+  become: true
+  roles:
+    - { role: docker_compose_deploy, tags: ['docker_compose_deploy'] }
+    - { role: springboot_api, tags: ['springboot_api'] }
+    - { role: nginx, tags: ['nginx', 'front_deploy'] }
+    - { role: front_deploy, front_name: parc-car, front_domain_name: parc-car.com, front_archive_file: parc-car-webapp.war,  tags: ['front_deploy'] }

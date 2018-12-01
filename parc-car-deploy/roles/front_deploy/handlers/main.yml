@@ -1,0 +1,7 @@
+---
+# handlers file for springboot_api
+- name: restart nginx
+  systemd:
+    state: restarted
+    name: nginx
+    daemon_reload: yes

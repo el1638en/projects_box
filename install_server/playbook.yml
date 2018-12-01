@@ -1,0 +1,19 @@
+###################
+# Playbook
+###################
+- hosts: all
+  gather_facts: true
+  vars_files:
+   - "vault.yml"
+  become: true
+  roles:
+    - { role: clean_services, tags: ['clean_services'] } # Supprimer les services inutiles
+    - { role: tools, tags: ['tools'] } # Installation des outils tels que git, openssl, etc.
+    - { role: firewall, tags: ['firewall'] } # Installation du firewall avec iptables
+    - { role: ssh, tags: ['ssh'] } # Configuration du serveur SSH
+    - { role: fail2ban, tags: ['fail2ban'] }
+    - { role: portsentry, tags: ['portsentry'] } # Installation de portsentry (securité anti-scan)
+    - { role: ntp, iptables_enabled: True, tags: ['ntp'] } # Installation de ntp
+    - { role: admin_tools, tags: ['admin_tools'] }  # Installer des outils d'admin (pg/ssh command)
+    - { role: docker, tags: ['docker'] } # Installer Docker et ses outils
+    - { role: monit,tags: ['monit'] } # - Installation monit (monitoring)

@@ -1,0 +1,67 @@
+---
+# tasks file for springboot_api
+
+- name: Stop eventual Spring Boot process running
+  systemd:
+    name: "{{ api_name }}"
+    state: stopped
+  ignore_errors: true
+
+- name: Create Group
+  group:
+    name: "{{ api_group }}"
+    state: present
+
+- name: Create User
+  user:
+    name: "{{ api_user }}"
+    createhome: no
+    group: "{{ api_group }}"
+    shell: /sbin/nologin
+    state: present
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ api_user }}"
+    group: "{{ api_group }}"
+    recurse: true
+  with_items:
+    - "{{ api_main_directory }}"
+    - "{{ api_jar_directory }}"
+    - "{{ api_conf_directory }}"
+    - "{{ api_logs_directory }}"
+
+- name: Copy Spring Boot application configuration directory
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ api_user }}"
+    group: "{{ api_group }}"
+    mode: "0750"
+  with_items: "{{ api_conf_files }}"
+
+- name: Copy jar file
+  copy:
+    src: /tmp/{{ api_jar_name }}
+    dest: "{{ api_jar_directory }}/{{ api_jar_name }}"
+    owner: "{{api_user }}"
+    group: "{{api_group }}"
+    force: yes
+    mode: 0755
+  notify: restart service
+
+- name: Copy Spring Boot script shell
+  template:
+    src: daemon.service.j2
+    dest: "/etc/systemd/system/{{ api_name }}.service"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable api service
+  systemd:
+    name: "{{ api_name }}.service"
+    state: started
+    enabled: yes
