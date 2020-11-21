@@ -32,6 +32,7 @@
     - "{{ api_jar_directory }}"
     - "{{ api_conf_directory }}"
     - "{{ api_logs_directory }}"
+    - "{{ api_pictures_directory }}"
 
 - name: Copy Spring Boot application configuration directory
   template:

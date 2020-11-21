@@ -9,9 +9,11 @@ api_jar_name:
 api_version:
 api_conf_directory: "/etc/{{ api_name }}/config"
 api_jar_directory: "{{ api_main_directory }}/jar"
-api_logs_directory: "/var/log/{{api_name}}/logs"
-api_logs_file: "{{ api_logs_directory }}/application.log"
+api_logs_directory: "/var/log/{{api_name}}"
+api_pictures_directory: "{{api_main_directory}}/pictures"
+api_logs_file: "{{ api_logs_directory }}/tomcat.log"
 api_nexus_url: "{{ nexus_url }}/service/local/artifact/maven/content"
+api_smtp_password:
 api_conf_files:
  - { src: "application.yml.j2", dest: "{{ api_conf_directory }}/application.yml" }
 

@@ -15,6 +15,12 @@
       ignore_errors: True
       tags: ['always']
 
+    - name: Down parc-car database (docker-compose)
+      shell: cd {{ docker_compose_directory }} && docker-compose down
+      when: {{docker_compose_down}}
+      ignore_errors: True
+      tags: ['always']
+
     - name: Stop parc-car database (docker-compose)
       shell: cd {{ docker_compose_directory }} && docker-compose stop
       ignore_errors: True

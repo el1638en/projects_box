@@ -62,6 +62,8 @@ spring:
     properties:
       mail:
         host: smtp.gmail.com
+        username: eric.legba@gmail.com
+        password: {{api_smtp_password}}
         port: 587
         smtp:
           auth: true
@@ -74,4 +76,4 @@ token:
 
 stored:
   file:
-    pictures: {{api_main_directory}}/pictures
+    pictures: {{api_pictures_directory}}
