@@ -52,6 +52,13 @@
     mode: 0755
   notify: restart service
 
+- name: set jar file right
+  file:
+    path: "{{ api_jar_directory }}/{{ api_jar_name }}"
+    owner: "{{api_user }}"
+    group: "{{api_group }}"
+    mode: 0755
+
 - name: Copy Spring Boot script shell
   template:
     src: daemon.service.j2
