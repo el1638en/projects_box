@@ -12,7 +12,7 @@
     group: root
 
 - name: Synchronize zip file
-  synchronize:
+  copy:
     src: "/tmp/{{ front_archive_file }}"
     dest: "/tmp/{{ front_archive_file }}"
   notify: restart service
