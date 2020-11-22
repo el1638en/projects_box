@@ -47,9 +47,6 @@
   synchronize:
     src: /tmp/{{ api_jar_name }}
     dest: "{{ api_jar_directory }}/{{ api_jar_name }}"
-    owner: "{{api_user }}"
-    group: "{{api_group }}"
-    mode: 0755
   notify: restart service
 
 - name: set jar file right
