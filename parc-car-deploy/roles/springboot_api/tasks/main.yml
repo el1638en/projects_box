@@ -49,8 +49,6 @@
     dest: "{{ api_jar_directory }}/{{ api_jar_name }}"
     owner: "{{api_user }}"
     group: "{{api_group }}"
-    force: yes
-    remote_src: yes
     mode: 0755
   notify: restart service
 
