@@ -11,6 +11,12 @@
     owner: root
     group: root
 
+- name: Synchronize zip file
+  synchronize:
+    src: "/tmp/{{ front_archive_file }}"
+    dest: "/tmp/{{ front_archive_file }}"
+  notify: restart service
+
 # Dézipper l'archive dans le répertoire du projet
 - name: unarchive dist archive
   unarchive:
