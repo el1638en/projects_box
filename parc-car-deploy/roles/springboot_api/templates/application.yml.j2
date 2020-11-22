@@ -59,16 +59,16 @@ spring:
   mail:
     default-encoding: UTF-8
     protocol: smtp
+    host: smtp.gmail.com
+    username: eric.legba@gmail.com
+    password: {{api_smtp_password}}
+    port: 587
     properties:
-      mail:
-        host: smtp.gmail.com
-        username: eric.legba@gmail.com
-        password: {{api_smtp_password}}
-        port: 587
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+          mail:
+            smtp:
+              auth: true
+              starttls:
+                enable: true
 token:
   jwt:
     duration: 60
