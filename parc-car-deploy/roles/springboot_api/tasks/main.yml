@@ -44,7 +44,7 @@
   with_items: "{{ api_conf_files }}"
 
 - name: Copy jar file
-  copy:
+  synchronize:
     src: /tmp/{{ api_jar_name }}
     dest: "{{ api_jar_directory }}/{{ api_jar_name }}"
     owner: "{{api_user }}"
