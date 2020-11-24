@@ -49,10 +49,9 @@
 
 - hosts: api
   gather_facts: true
-  include_vars:
-    - "vars/vars-{{env}}.yml"
   vars_files:
     - "vault.yml"
+    - "vars/vars-{{env}}.yml"
   become: true
   roles:
     - { role: docker_compose_deploy, tags: ['docker_compose_deploy'] }
