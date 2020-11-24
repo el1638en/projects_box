@@ -1,6 +1,5 @@
 ---
 # tasks file for docker_compose_deploy
-
 - name: Run docker-compose
   shell: cd {{ docker_compose_directory }} && docker-compose up -d
   ignore_errors: true

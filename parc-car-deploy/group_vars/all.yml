@@ -1,4 +1,4 @@
 ---
 
 nexus_repository_url: "http://vm-debian-1:8081/repository/parc-car-private"
-docker_compose_directory: "/opt/parc-car/docker-compose"
+docker_compose_directory: "/opt/parc-car/docker-local-env"
