@@ -49,6 +49,8 @@
 
 - hosts: api
   gather_facts: true
+  include_vars:
+    - "vars/vars-{{env}}.yml"
   vars_files:
     - "vault.yml"
   become: true
