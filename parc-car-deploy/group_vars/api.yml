@@ -6,4 +6,5 @@ api_main_directory: /opt/parc-car
 api_groupid: "com.syscom"
 api_artifactid: "parc-car-api"
 api_jar_name: "parc-car-api.jar"
+docker_compose_directory: "/opt/parc-car/docker-compose"
 api_version: 1.0.0

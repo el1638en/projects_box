@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 User={{ api_user }}
-ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java -jar  {{ api_jar_directory }}/{{ api_jar_name }} --spring.config.location={{ api_conf_directory }}/
+ExecStart=java -jar  {{ api_jar_directory }}/{{ api_jar_name }} --spring.config.location={{ api_conf_directory }}/
 SuccessExitStatus=143
 
 [Install]

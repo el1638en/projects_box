@@ -37,6 +37,7 @@
         -DrepoUrl={{ nexus_repository_url }} \
         -Ddest=/tmp/parc-car-api.jar
     #      shell: mvn org.apache.maven.plugins:maven-dependency-plugin:2.4:get -DrepoUrl={{ nexus_repository_url }} -DartifactId=parc-car-api -DgroupId=com.syscom -Dversion=1.0.0 -Ddest=/var/lib/jenkins/parc-car-api.jar
+      tags: ['always', 'springboot_api']
 
     - name: Download parc-car-webapp front war
       shell: mvn org.apache.maven.plugins:maven-dependency-plugin:2.4:get \
@@ -46,6 +47,7 @@
         -DrepoUrl={{ nexus_repository_url }} \
         -Dpackaging=war \
         -Ddest=/tmp/parc-car-webapp.war
+      tags: ['always', 'front_deploy']
 
 - hosts: api
   gather_facts: true
