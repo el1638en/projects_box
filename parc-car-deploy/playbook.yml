@@ -51,10 +51,9 @@
   gather_facts: true
   vars_files:
     - "vault.yml"
-    - "vars/vars-{{env}}.yml"
   become: true
   roles:
     - { role: docker_compose_deploy, tags: ['docker_compose_deploy'] }
     - { role: springboot_api, tags: ['springboot_api'] }
     - { role: nginx, tags: ['nginx', 'front_deploy'] }
-    - { role: front_deploy, front_name: parc-car, front_domain_name: parc-car.com, front_archive_file: parc-car-webapp.war,  tags: ['front_deploy'] }
+    - { role: front_deploy, front_name: parc-car, front_domain_name: localhost, front_archive_file: parc-car-webapp.war,  tags: ['front_deploy'] }
