@@ -62,13 +62,14 @@ spring:
     host: smtp.gmail.com
     username: eric.legba@gmail.com
     password: {{api_smtp_password}}
-    port: 587
     properties:
           mail:
             smtp:
               auth: true
-              starttls:
-                enable: true
+              socketFactory:
+                port: 465
+                class: javax.net.ssl.SSLSocketFactory
+                fallback: false
 token:
   jwt:
     duration: 60
