@@ -1,7 +1,7 @@
 ---
 - name: Ensure nginx is installed.
   apt:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
   with_items:
     - nginx
