@@ -1,11 +1,51 @@
 ---
 - name: Ensure nginx is installed.
   apt:
-    name: nginx
+    name: {{ item }}
     state: present
+  with_items:
+    - nginx
+    - openssl
 
 - name: Ensure nginx service is running as configured.
   systemd:
     name: nginx
     state: started
     enabled: yes
+
+- name: Check that the selfsigned key exists
+  stat:
+    path: "{{ nginx_slf_signed_key }}"
+    register: stat_result
+
+- name: Create the self-signed key and self-signed certificat
+  command: >
+    openssl req
+      -x509
+      -nodes
+      -days 365
+      -newkey rsa:2048
+      -keyout "{{ nginx_slf_signed_key }}"
+      -out "{{ nginx_slf_signed_crt }}"
+      -subj "/C=FR/ST=Lyon/L=Lyon/O=Global Security/OU=IT Department/CN={{ ansible_ssh_host }}"
+    when: not stat_result.stat.exists
+
+- name: Create the dhparam file
+  command: >
+    openssl dhparam
+      -out "{{ nginx_dhparam }}" 2048
+    when: not stat_result.stat.exists
+
+- name: Copy template self-signed.conf file configuration
+  template:
+    src: self-signed.conf.j2
+    dest: /etc/nginx/snippets/self-signed.conf
+    owner: www-data
+    group: www-data
+
+- name: Copy templates files configuration
+  template:
+    src: self-params.conf.j2
+    dest: /etc/nginx/snippets/ssl-params.conf
+    owner: www-data
+    group: www-data
